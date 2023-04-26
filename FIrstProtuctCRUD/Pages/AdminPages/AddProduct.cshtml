@@ -1,0 +1,28 @@
+﻿@page
+@model FIrstProtuctCRUD.Pages.ProductsPage.AddProductModel
+@{
+}
+@if (Model.Id.HasValue)
+{
+    <h3>Редактирование</h3>
+}
+
+<h2>@Model.Message</h2>
+<form action="" method="post">
+    <label for="name">Продукт</label><br />
+    <input type="text" asp-for="ViewModel.Name" placeholder="Название продукта" >
+    <span asp-validation-for="@Model.ViewModel.Name" class="error text-danger"></span><br />
+    <label for="code">Код товара</label><br />
+    <input type="number" asp-for="ViewModel.Code" placeholder="Веедите код товара" />
+    <span asp-validation-for="@Model.ViewModel.Code" class="error text-danger"></span><br />
+    <label for="price">Цена</label><br />
+    <input type="number" asp-for="ViewModel.Price" placeholder="Введите цену" />
+    <span asp-validation-for="@Model.ViewModel.Price" class="error text-danger"></span><br />
+    <label for="quantity">Количество</label><br />
+    <input type="number" asp-for="ViewModel.Quantity" placeholder="Введите количество" />
+    <span asp-validation-for="@Model.ViewModel.Quantity" class="error text-danger"></span><br /><br />
+    <input class="btn btn-success" type="submit" value="Добавить продукт" />
+    </>
+</form>
+
+

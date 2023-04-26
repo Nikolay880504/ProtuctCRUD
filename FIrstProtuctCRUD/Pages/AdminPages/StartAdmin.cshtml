@@ -1,0 +1,54 @@
+﻿@page
+@model FIrstProductCRUD.Pages.AdminPages.StartAdmin
+@{
+}
+<html>
+<head>
+    <h1 class="display-8, text-center">Все продукты</h1>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="btn btn-primary" asp-area="" asp-page="/AdminPages/StartAdmin">Домашняя страница</a>
+                        <a class="btn btn-primary" asp-area="" asp-page="/AdminPages/AddProduct">Добавить товар</a>
+                    </li>
+                </ul>
+                </>
+            </div>
+        </nav>
+    </header>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Название</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Количество</th>
+                <th scope="col">Код товара</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var product in Model.AllProducts)
+                {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td>@product.Price</td>
+                        <td>@product.Quantity</td>
+                        <td>@product.Code</td>
+                        <td width="5%"><a class="btn btn-primary" asp-page="/AdminPages/AddProduct" asp-route-id="@product.Id">Редактировать</a></td>
+                        <form method="post" asp-page-handler="Remove">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                        <td width="5%"><button class="btn btn-danger" type="submit">Удалить</button></td>
+                        </form>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</body>
+</html>

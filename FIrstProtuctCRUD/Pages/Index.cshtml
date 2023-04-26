@@ -1,0 +1,22 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<html>
+<head>
+    <h1 class="display-8, text-center">Выберете режим использования </h1>
+</head>
+<body>
+    <div class="container" style='text-align:center; width:100%'>
+        <ul class ="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a class="btn btn-primary" asp-area="" asp-page="/AdminPages/StartAdmin">Администратор</a>
+                <a class="btn btn-primary" asp-area="" asp-page="/UserPages/StartUser">Пользователь</a>
+            </li>
+        </ul>
+        </>
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+﻿@page
+@model FIrstProductCRUD.Pages.UserPages.StartUserModel
+@{
+}
+<html>
+<head>
+    <h1 class="text-center">Доступные товары</h1>
+</head>
+<body>
+    <div class="container" style='text-align:end; width:100%'>
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a class="btn btn-primary" asp-area="" asp-page="/UserPages/Cart">Корзина</a>
+            </li>
+        </ul>
+        </>
+    </div>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Название</th>
+                <th>Цена</th>
+                <th>Наличие шт.</th>
+                <th>Количество шт.</th>
+                <th>Код товара</th>
+                <th></th>
+            </tr>
+        </thead>
+        @{
+            foreach (var product in Model.AllProducts)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>@product.Quantity</td>                 
+                    <form method="post" asp-page-handler="AddCart">
+                    <td><input type="number" name="QuantityProducts" /></td>
+                    <input type="hidden" name="ProductId" value="@product.Id" />
+                    <td>@product.Code</td>
+                    <td><button class="btn btn-success">Добавить в корзину</button></td>
+                    </form>
+                </tr>
+            }
+        }
+    </table>
+</body>
+</html>
