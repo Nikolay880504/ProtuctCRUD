@@ -17,5 +17,4 @@ namespace FIrstProductCRUD.Models
         public virtual Product Product { get; set; }
 
     }
-
 }

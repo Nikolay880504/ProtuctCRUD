@@ -6,6 +6,7 @@ using Microsoft.Graph;
 using System;
 using FIrstProtuctCRUD.Models;
 using System.Security.Cryptography;
+using FIrstProductCRUD.Pages.AdminPages;
 
 namespace FIrstProtuctCRUD.Pages.ProductsPage
 {
@@ -18,7 +19,7 @@ namespace FIrstProtuctCRUD.Pages.ProductsPage
         public int? Id { get; set; }
 
         [BindProperty]
-        public ViewModel ViewModel { get; set; }
+        public ProductCreateViewModel ViewModel { get; set; }
 
 
         public AddProductModel(IServiceStorage serviceStorage)
@@ -28,7 +29,7 @@ namespace FIrstProtuctCRUD.Pages.ProductsPage
         public void OnGet()
         {
             Message = "Добавьте ваш товар";
-            ViewModel = new ViewModel();
+            ViewModel = new ProductCreateViewModel();
             if (Id.HasValue)
             {
                 Product product = _ServiceStorage.GetByIdOrNull(Id.Value);

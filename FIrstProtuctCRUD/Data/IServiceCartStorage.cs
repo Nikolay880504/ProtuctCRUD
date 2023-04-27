@@ -8,6 +8,8 @@ namespace FIrstProductCRUD.Data
     {
         void AddCartProduct(CartProduct cartProduct);
         List<CartProduct> GetCartProductForUser(int id);
-        void DeleteProductFromCart(int cartProductId);
+        void RemoveProductFromCart(int cartProductId);
+
+        void RemoveCart(int? userId);
     }
 }

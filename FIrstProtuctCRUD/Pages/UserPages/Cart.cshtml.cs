@@ -26,13 +26,14 @@ namespace FIrstProductCRUD.Pages.UserPages
         }
         public async Task<IActionResult> OnPostRemove(int productIdFromCart)
         {
-            _serviceCartProduct.DeleteProductFromCart(productIdFromCart);
+            _serviceCartProduct.RemoveProductFromCart(productIdFromCart);
             return RedirectToPage("/UserPages/Cart");
         }
         public async Task<IActionResult> OnPostAddOrder()
         {           
-            _serviceOrderStorage.AddOrder(Models.User.Id);          
-            return RedirectToPage("/UserPages/Cart");
+            _serviceOrderStorage.AddOrder(Models.User.Id); 
+            _serviceCartProduct.RemoveCart(Models.User.Id); 
+            return RedirectToPage("/UserPages/OrderCreatedPage");
         }
     }
 }

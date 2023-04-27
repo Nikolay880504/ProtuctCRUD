@@ -6,7 +6,7 @@ namespace FIrstProductCRUD.Data
     public class CartStorage : IServiceCartStorage
     {
         ApplicationContext _context;
-      
+
         public CartStorage(ApplicationContext context)
         {
             _context = context;
@@ -22,16 +22,25 @@ namespace FIrstProductCRUD.Data
             return _context.Carts.Where(c => c.UserId == userId).Include(c => c.Product).ToList();
         }
 
-        public void DeleteProductFromCart(int cartProductId)
-        {          
+        public void RemoveProductFromCart(int cartProductId)
+        {
             var product = _context.Carts.FirstOrDefault(c => c.ID == cartProductId);
-           
-            if (product!= null)
-            {                
+
+            if (product != null)
+            {
                 _context.Carts.Remove(product);
                 _context.SaveChanges();
             }
 
+        }
+
+        public void RemoveCart(int? userId)
+        {
+            _context.Carts.
+                Where(c => c.UserId == userId).
+                ToList().
+                ForEach(c => _context.Remove(c));
+            _context.SaveChanges();
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FIrstProductCRUD.Models
+namespace FIrstProductCRUD.Pages.AdminPages
 {
-    public class ViewModel
+    public class ProductCreateViewModel
     {
         [Required(ErrorMessage = "Поле не может быть пустым")]
         [StringLength(50, ErrorMessage = "Название не должно превышать 50 символов")]
