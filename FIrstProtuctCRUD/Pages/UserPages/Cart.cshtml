@@ -13,7 +13,7 @@
         <thead>
             <tr>
                 <th>Название</th>
-                <th>Цена</th>
+                <th>Цена за ед.</th>
                 <th>Количество шт.</th>
                 <th>Цена</th>
                 <th></th>
@@ -28,7 +28,7 @@
                         fullPriceForOneProduct = element.QuantityProducts * element.Product.Price;}
                         <td>@element.Product.Name</td>
                         <td>@element.Product.Price</td>
-                        <td>@element.QuantityProducts</td>
+                        <td>@element.QuantityProducts</td>              
                         <td>@fullPriceForOneProduct</td>                      
                         <form method="post" asp-page-handler="Remove">
                             <input type="hidden" name="productIdFromCart" value="@element.ID" />

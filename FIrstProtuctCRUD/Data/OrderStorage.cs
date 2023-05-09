@@ -12,7 +12,7 @@ namespace FIrstProductCRUD.Data
             _context = context;
         }
 
-        public void AddOrder(int userId)
+        public Order AddOrder(int userId)
         {         
             var order = new Order();
             double priceTotal = 0;
@@ -37,7 +37,9 @@ namespace FIrstProductCRUD.Data
             order.PriceTotal = priceTotal;
             order.Elements = orderElements;
             _context.Add(order);
-            _context.SaveChanges();       
+            _context.SaveChanges();
+          
+            return order;
         }
     }
 }

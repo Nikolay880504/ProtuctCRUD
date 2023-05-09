@@ -1,4 +1,5 @@
-﻿using FIrstProtuctCRUD.Models;
+﻿using FIrstProductCRUD.Models;
+using FIrstProtuctCRUD.Models;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace FIrstProductCRUD.Data
@@ -12,5 +13,7 @@ namespace FIrstProductCRUD.Data
         void Update(Product product);
 
         bool IsCodeExists(int code, int? id);
+
+        void ChangeQuantityProducts(Order order);
     }
 }

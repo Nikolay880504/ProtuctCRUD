@@ -46,11 +46,7 @@ namespace FIrstProductCRUD.Data
          Property(o => o.OrderId).UseIdentityColumn();
 
             modelBuilder.Entity<OrderElement>().
-            Property(e => e.Id).UseIdentityColumn();
-
-         
-           
-
+            Property(e => e.Id).UseIdentityColumn();           
         }
     }
 }

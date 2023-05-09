@@ -29,19 +29,22 @@
         @{
             foreach (var product in Model.AllProducts)
             {
+               
                 <tr>
                     <td>@product.Name</td>
                     <td>@product.Price</td>
                     <td>@product.Quantity</td>                 
-                    <form method="post" asp-page-handler="AddCart">
-                    <td><input type="number" name="QuantityProducts" /></td>
+                    <form method="post" asp-page-handler="AddCart">                   
+                    <td><input type="number" name="QuantityProducts" /></td>                 
                     <input type="hidden" name="ProductId" value="@product.Id" />
                     <td>@product.Code</td>
                     <td><button class="btn btn-success">Добавить в корзину</button></td>
                     </form>
                 </tr>
             }
+            <div class="validation" asp-validation-summary="All"></div>      
         }
+       
     </table>
 </body>
 </html>

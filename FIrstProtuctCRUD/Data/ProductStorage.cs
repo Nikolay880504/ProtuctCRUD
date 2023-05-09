@@ -1,4 +1,5 @@
-﻿using FIrstProtuctCRUD.Models;
+﻿using FIrstProductCRUD.Models;
+using FIrstProtuctCRUD.Models;
 using Microsoft.Graph;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq.Expressions;
@@ -55,8 +56,11 @@ namespace FIrstProductCRUD.Data
                 result.Quantity = product.Quantity;
             }
         }
+        public void ChangeQuantityProducts(Order order)
+        {
 
-     
+        }
+
     }
 }
 

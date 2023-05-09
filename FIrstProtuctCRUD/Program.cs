@@ -18,7 +18,10 @@ namespace FIrstProductCRUD
             builder.Services.AddScoped<IServiceCartStorage, CartStorage>();
             builder.Services.AddScoped<IServiceOrderStorage, OrderStorage>();
             builder.Services.AddScoped<ApplicationContext>();
-           
+            builder.Services.AddControllers(
+            options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

@@ -10,6 +10,9 @@ namespace FIrstProductCRUD.Pages.UserPages
     {
         private readonly IServiceCartStorage _serviceCartStorage;
         private readonly IServiceStorage _serviceStorage;
+        [BindProperty]
+        public CartProduct CartProduct { get; set; }
+
         public List<Product> AllProducts { get; set; }
 
         public StartUserModel(IServiceStorage serviceStorage, IServiceCartStorage serviceCartStorage)
@@ -23,10 +26,20 @@ namespace FIrstProductCRUD.Pages.UserPages
             AllProducts = _serviceStorage.GetProducts();
             return Page();
         }
-        public async Task<IActionResult> OnPostAddCart(CartProduct cartProduct)
+        public async Task<IActionResult> OnPostAddCart()
         {
-            cartProduct.UserId = Models.User.Id;
-            _serviceCartStorage.AddCartProduct(cartProduct);
+           var product =  _serviceStorage.GetByIdOrNull(CartProduct.ProductId);
+            if (product.Quantity < CartProduct.QuantityProducts)
+            {
+                ModelState.AddModelError("CartProduct.QuantityProducts", "“акого количества товара нет в наличии");
+            }
+            if (!ModelState.IsValid)
+            {
+                AllProducts = _serviceStorage.GetProducts();
+                return Page();
+            }
+            CartProduct.UserId = Models.User.Id;
+            _serviceCartStorage.AddCartProduct(CartProduct);
             return RedirectToPage("/UserPages/StartUser");
         }
     }

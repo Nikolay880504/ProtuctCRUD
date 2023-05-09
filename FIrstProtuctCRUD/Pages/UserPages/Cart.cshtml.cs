@@ -7,15 +7,15 @@ namespace FIrstProductCRUD.Pages.UserPages
 {
     public class CartModel : PageModel
     {
-        Order Order;
         private readonly IServiceCartStorage _serviceCartProduct;
         private readonly IServiceOrderStorage _serviceOrderStorage;
-
+        private readonly IServiceStorage _serviceStorage;
 
         public List<CartProduct> UserCart { get; set; }
-        public CartModel(IServiceCartStorage serviceCartStorage , IServiceOrderStorage serviceOrderStorage)
+        public CartModel(IServiceCartStorage serviceCartStorage, IServiceOrderStorage serviceOrderStorage, IServiceStorage  serviceStorage)
         {
-            this._serviceCartProduct = serviceCartStorage;           
+            this._serviceCartProduct = serviceCartStorage;
+            this._serviceStorage = serviceStorage;
             this._serviceOrderStorage = serviceOrderStorage;
         }
 
@@ -30,10 +30,11 @@ namespace FIrstProductCRUD.Pages.UserPages
             return RedirectToPage("/UserPages/Cart");
         }
         public async Task<IActionResult> OnPostAddOrder()
-        {           
-            _serviceOrderStorage.AddOrder(Models.User.Id); 
-            _serviceCartProduct.RemoveCart(Models.User.Id); 
-            return RedirectToPage("/UserPages/OrderCreatedPage");
+        {
+            var order = _serviceOrderStorage.AddOrder(Models.User.Id);
+            _serviceStorage.ChangeQuantityProducts(order);
+            _serviceCartProduct.RemoveCart(Models.User.Id);
+            return RedirectToPage("/UserPages/OrderCreatedPage", new { id = order.OrderId.ToString()});
         }
     }
 }
