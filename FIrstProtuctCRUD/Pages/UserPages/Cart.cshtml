@@ -3,47 +3,68 @@
 @{
     double fullPriceOrder = 0;
     double fullPriceForOneProduct = 0;
+
 }
+<!DOCTYPE html>
 <html>
 <head>
-    <h1 class="display-8, text-center">Корзина</h1>
+    @{
+    if (Model.UserCart.Count == 0)
+    {
+    <title>Ваша корзина пуста</title>
+    }
+    else
+    {
+    <title>Корзина</title>
+    }
+    }
+    
 </head>
 <body>
     <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Название</th>
-                <th>Цена за ед.</th>
-                <th>Количество шт.</th>
-                <th>Цена</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @{
+
+        @{
+            if (Model.UserCart.Count != 0)
+            {
+                <h1 class="display-8, text-center">Корзина</h1>
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Цена за ед.</th>
+                        <th>Количество шт.</th>
+                        <th>Цена</th>
+                        <th></th>
+                    </tr>
+                </thead>
                 foreach (var element in Model.UserCart)
                 {
                     <tr>
-                        @{fullPriceOrder += element.QuantityProducts * element.Product.Price;
-                        fullPriceForOneProduct = element.QuantityProducts * element.Product.Price;}
+                        @{
+                            fullPriceOrder += (int)element.QuantityProducts * element.Product.Price;
+                            fullPriceForOneProduct = (int)element.QuantityProducts * element.Product.Price;
+                        }
                         <td>@element.Product.Name</td>
                         <td>@element.Product.Price</td>
-                        <td>@element.QuantityProducts</td>              
-                        <td>@fullPriceForOneProduct</td>                      
+                        <td>@element.QuantityProducts</td>
+                        <td>@fullPriceForOneProduct</td>
                         <form method="post" asp-page-handler="Remove">
                             <input type="hidden" name="productIdFromCart" value="@element.ID" />
                         <td width="5%"><button class="btn btn-danger" type="submit">Удалить</button></td>
                         </form>
                     </tr>
                 }
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <h1>@fullPriceOrder</h1>
+                    <form method="post" asp-page-handler="AddOrder">
+                        <button class="btn btn-success btn-lg" type="submit">Оформить заказ</button>
+                    </form>
+                </div>
             }
-        </tbody>
+            else
+            {
+                <h1 class="display-8, text-center">Ваша корзина пуста</h1>
+            }
+        }
     </table>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <h1>@fullPriceOrder</h1>
-        <form method="post" asp-page-handler="AddOrder">
-            <button class="btn btn-success btn-lg" type="submit">Оформить заказ</button>
-        </form>         
-    </div>
 </body>
 </html>

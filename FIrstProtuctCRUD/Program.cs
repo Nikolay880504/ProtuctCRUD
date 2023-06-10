@@ -1,7 +1,12 @@
 using FIrstProductCRUD.Data;
 using FIrstProductCRUD.Models;
+using FIrstProductCRUD.Pages.UserPages;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
+
+
 
 namespace FIrstProductCRUD
 {
@@ -9,18 +14,39 @@ namespace FIrstProductCRUD
     {
         public static void Main(string[] args)
         {
+          
             var builder = WebApplication.CreateBuilder(args);
-            string connection = builder.Configuration.GetConnectionString("DefaultConnection");
-            builder.Services.AddDbContext<ApplicationContext>(option => option.UseSqlServer(connection));
+            
+            var connectionString = builder.Configuration.
+                GetConnectionString("FIrstProductCRUDContextConnection") ??
+                throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+            builder.Services.AddDbContext<ApplicationContext>(options =>
+                    options.UseSqlServer(connectionString));
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => { options.LoginPath = "/Account/Register"; });
+
+            builder.Services.AddRazorPages();
+
+            builder.Services.AddAuthorization();
+
+            builder.Services.
+                AddDefaultIdentity<WebSiteUser>(options =>
+                options.SignIn.RequireConfirmedAccount = false)
+                .AddEntityFrameworkStores<ApplicationContext>(); 
+
+            builder.Services.AddRazorPages();
+
             // Add services to the container.
             builder.Services.AddRazorPages();
             builder.Services.AddScoped<IServiceStorage, DataBaseStorage>();
             builder.Services.AddScoped<IServiceCartStorage, CartStorage>();
             builder.Services.AddScoped<IServiceOrderStorage, OrderStorage>();
             builder.Services.AddScoped<ApplicationContext>();
+
             builder.Services.AddControllers(
             options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
-
 
             var app = builder.Build();
 
@@ -36,6 +62,7 @@ namespace FIrstProductCRUD
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

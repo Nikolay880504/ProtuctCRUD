@@ -26,7 +26,7 @@ namespace FIrstProductCRUD.Data
 
                 priceTotal += product.Product.Price * product.QuantityProducts;            
                 orderElement.ProductId = product.ProductId;
-                orderElement.Quantity = product.QuantityProducts;
+                orderElement.Quantity =(int) product.QuantityProducts;
                 orderElement.PriceProduct = product.ProductId;
                 orderElement.Order = order;
 

@@ -1,5 +1,7 @@
 ﻿using FIrstProductCRUD.Models;
 using FIrstProtuctCRUD.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Graph;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +9,7 @@ using System.Net;
 
 namespace FIrstProductCRUD.Data
 {
-    public class ApplicationContext : DbContext
+    public class ApplicationContext : IdentityDbContext<WebSiteUser,IdentityRole<int>, int>
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<CartProduct> Carts { get; set; }
