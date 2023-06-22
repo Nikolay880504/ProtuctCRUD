@@ -40,20 +40,20 @@ namespace FIrstProductCRUD.Areas.Identity.Pages.Account
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
-            _logger = logger;          
+            _logger = logger;
         }
 
-       
+
         [BindProperty]
         public InputModel Input { get; set; }
-       
+
         public string ReturnUrl { get; set; }
-       
+
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
-     
+
         public class InputModel
         {
-           
+
             [Required]
             [EmailAddress]
             [Display(Name = "Почта")]
@@ -79,11 +79,11 @@ namespace FIrstProductCRUD.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
-           // ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();// предоставляет пользователю возможность выбора провайдера аутентификации из списка доступных.
+            // ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();// предоставляет пользователю возможность выбора провайдера аутентификации из списка доступных.
             if (ModelState.IsValid)//Проверяет нет ошибок ввода
             {
                 var user = CreateUser();//создаеться обьект IdentityUser
-                
+
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);//используется для установки имени пользователя в БД.
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);//используется для установки почты пользователя  в БД.
                 var result = await _userManager.CreateAsync(user, Input.Password);//создание нового пользователя в БД
