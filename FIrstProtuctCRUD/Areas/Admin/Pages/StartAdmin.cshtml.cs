@@ -3,7 +3,7 @@ using FIrstProtuctCRUD.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FIrstProductCRUD.Pages.AdminPages
+namespace FIrstProductCRUD.Admin.Pages
 {
     public class StartAdmin : PageModel
     {

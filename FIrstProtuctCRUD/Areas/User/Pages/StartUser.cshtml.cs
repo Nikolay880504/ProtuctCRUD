@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Newtonsoft.Json.Linq;
 
-namespace FIrstProductCRUD.Pages.UserPages
+namespace FIrstProductCRUD.User.Pages
 {
     public class StartUserModel : PageModel
     {
@@ -50,7 +50,7 @@ namespace FIrstProductCRUD.Pages.UserPages
             }
             CartProduct.UserId = HttpContext.GetUserIdOrDefault();
             _serviceCartStorage.AddCartProduct(CartProduct);
-            return RedirectToPage("/UserPages/StartUser");
+            return RedirectToPage("./StartUser");
         }
     }
 }

@@ -6,9 +6,8 @@ using Microsoft.Graph;
 using System;
 using FIrstProtuctCRUD.Models;
 using System.Security.Cryptography;
-using FIrstProductCRUD.Pages.AdminPages;
 
-namespace FIrstProtuctCRUD.Pages.ProductsPage
+namespace FIrstProductCRUD.Admin.Pages
 {
     public class AddProductModel : PageModel
     {

@@ -1,5 +1,5 @@
 ﻿using FIrstProductCRUD.Models;
-using FIrstProductCRUD.Pages.UserPages;
+using FIrstProductCRUD.Admin.Pages;
 using FIrstProtuctCRUD.Models;
 
 namespace FIrstProductCRUD.Data

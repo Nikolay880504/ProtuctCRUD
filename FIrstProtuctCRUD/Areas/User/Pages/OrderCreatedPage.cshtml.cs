@@ -2,7 +2,7 @@ using FIrstProductCRUD.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace FIrstProductCRUD.Pages.UserPages
+namespace FIrstProductCRUD.User.Pages
 {
 
     public class OrderCreatedPageModel : PageModel
@@ -10,7 +10,7 @@ namespace FIrstProductCRUD.Pages.UserPages
         public string Id { get; set; }
         public void OnGet(string id)
         {
-            Id = id;          
+            Id = id;
         }
     }
 }

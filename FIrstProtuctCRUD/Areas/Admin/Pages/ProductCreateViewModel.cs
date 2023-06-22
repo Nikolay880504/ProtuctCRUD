@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FIrstProductCRUD.Pages.AdminPages
+namespace FIrstProductCRUD.Admin.Pages
 {
     public class ProductCreateViewModel
     {

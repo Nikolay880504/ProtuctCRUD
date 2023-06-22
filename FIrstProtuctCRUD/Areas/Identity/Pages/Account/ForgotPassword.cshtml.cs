@@ -28,45 +28,32 @@ namespace FIrstProductCRUD.Areas.Identity.Pages.Account
             _emailSender = emailSender;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [Required(ErrorMessage = "Введите адрес электронной почты.")]
-            [EmailAddress]
-            
+            [EmailAddress]           
             public string Email { get; set; }
-            [Required(ErrorMessage = "Введите новый пароль")]
-            [StringLength(100, ErrorMessage = "Длина пароля должна быть не менее {2} и не более {1} символов.", MinimumLength = 6)]
-            public string NewPasswort { get; set; }
+          
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
-            {                
-                var user = await _userManager.FindByEmailAsync(Input.Email);
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+            var user = await _userManager.FindByEmailAsync(Input.Email);
                
                 if(user != null)
                 {
-                    
+                    return RedirectToPage("./ResetPassword");
                 }
               
-                return RedirectToPage("./ForgotPasswordConfirmation");
-            }
+              //  return RedirectToPage("./ForgotPasswordConfirmation");
+          
 
             return Page();
         }

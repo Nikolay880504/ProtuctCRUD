@@ -29,21 +29,18 @@ namespace FIrstProductCRUD.Areas.Identity.Pages.Account
         private readonly IUserStore<WebSiteUser> _userStore;//Интерфейс служит  для взаимодейстивя с БД 
         private readonly IUserEmailStore<WebSiteUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<WebSiteUser> userManager,
             IUserStore<WebSiteUser> userStore,
             SignInManager<WebSiteUser> signInManager,
-            ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            ILogger<RegisterModel> logger)
         {
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
-            _logger = logger;
-            _emailSender = emailSender;
+            _logger = logger;          
         }
 
        
@@ -86,7 +83,7 @@ namespace FIrstProductCRUD.Areas.Identity.Pages.Account
             if (ModelState.IsValid)//Проверяет нет ошибок ввода
             {
                 var user = CreateUser();//создаеться обьект IdentityUser
-
+                
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);//используется для установки имени пользователя в БД.
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);//используется для установки почты пользователя  в БД.
                 var result = await _userManager.CreateAsync(user, Input.Password);//создание нового пользователя в БД

@@ -1,12 +1,12 @@
 using FIrstProductCRUD.Data;
 using FIrstProductCRUD.Models;
-using FIrstProductCRUD.Pages.UserPages;
+using FIrstProductCRUD.Admin.Pages;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
-
-
+using FIrstProductCRUD.Data.RolesIdentity;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FIrstProductCRUD
 {
@@ -14,11 +14,11 @@ namespace FIrstProductCRUD
     {
         public static void Main(string[] args)
         {
-          
+
             var builder = WebApplication.CreateBuilder(args);
-            
+
             var connectionString = builder.Configuration.
-                GetConnectionString("FIrstProductCRUDContextConnection") ??
+                GetConnectionString("DefaultConnection") ??
                 throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
             builder.Services.AddDbContext<ApplicationContext>(options =>
@@ -31,12 +31,9 @@ namespace FIrstProductCRUD
 
             builder.Services.AddAuthorization();
 
-            builder.Services.
-                AddDefaultIdentity<WebSiteUser>(options =>
-                options.SignIn.RequireConfirmedAccount = false)
-                .AddEntityFrameworkStores<ApplicationContext>(); 
-
-            builder.Services.AddRazorPages();
+            builder.Services.AddIdentity<WebSiteUser, IdentityRole<int>>(options =>
+            options.SignIn.RequireConfirmedAccount = false)
+            .AddEntityFrameworkStores<ApplicationContext>();
 
             // Add services to the container.
             builder.Services.AddRazorPages();
@@ -49,6 +46,14 @@ namespace FIrstProductCRUD
             options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
 
             var app = builder.Build();
+            var scopeFactory = app.Services.GetRequiredService<IServiceScopeFactory>();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<int>>>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<WebSiteUser>>();
+                new AppDbInitializer().CreateSuperUser(userManager, roleManager).GetAwaiter().GetResult();
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -69,6 +74,8 @@ namespace FIrstProductCRUD
             app.MapRazorPages();
 
             app.Run();
+
+                     
         }
     }
 }
