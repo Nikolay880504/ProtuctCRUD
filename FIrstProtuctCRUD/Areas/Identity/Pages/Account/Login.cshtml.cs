@@ -83,7 +83,7 @@ namespace FIrstProductCRUD.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return RedirectToPage("/StartUser", new { area = "User" });
+                    return RedirectToPage("/ProducList", new { area = "User" });
                 }
                 if (result.IsLockedOut)
                 {

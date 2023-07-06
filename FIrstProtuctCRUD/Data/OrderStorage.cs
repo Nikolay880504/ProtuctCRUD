@@ -6,7 +6,7 @@ namespace FIrstProductCRUD.Data
 {
     public class OrderStorage : IServiceOrderStorage
     {
-        ApplicationContext _context;
+        private readonly ApplicationContext _context;
         public OrderStorage(ApplicationContext context)
         {
             _context = context;

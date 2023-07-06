@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -29,7 +30,7 @@ namespace FIrstProductCRUD.Areas.Identity.Pages.Account
         private readonly IUserStore<WebSiteUser> _userStore;//Интерфейс служит  для взаимодейстивя с БД 
         private readonly IUserEmailStore<WebSiteUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-
+       
         public RegisterModel(
             UserManager<WebSiteUser> userManager,
             IUserStore<WebSiteUser> userStore,
@@ -79,6 +80,7 @@ namespace FIrstProductCRUD.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
+
             // ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();// предоставляет пользователю возможность выбора провайдера аутентификации из списка доступных.
             if (ModelState.IsValid)//Проверяет нет ошибок ввода
             {
@@ -87,9 +89,10 @@ namespace FIrstProductCRUD.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);//используется для установки имени пользователя в БД.
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);//используется для установки почты пользователя  в БД.
                 var result = await _userManager.CreateAsync(user, Input.Password);//создание нового пользователя в БД
-
+                
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "user");
                     _logger.LogInformation("User created a new account with password.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);//аутентификация пользователя и установки куки аутентификации.
@@ -100,7 +103,6 @@ namespace FIrstProductCRUD.Areas.Identity.Pages.Account
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
             }
-
             return Page();
         }
 

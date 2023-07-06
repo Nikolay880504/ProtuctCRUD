@@ -1,5 +1,7 @@
 ﻿@page
-@model StartUserModel
+@model ProducListModel
+@using Microsoft.AspNetCore.Authorization
+@using FIrstProductCRUD.Constants
 
 <html>
 <head>
@@ -10,6 +12,16 @@
     <div class="container" style='text-align:end; width:100%'>
         <ul class="navbar-nav flex-grow-1">
             <li class="nav-item">
+                @{
+                    if (User.IsInRole(RoleNameConstants.Admin))
+                    {
+                        <a class="btn btn-primary" asp-area="Admin" asp-page="/ProductEditing">Учет товаров</a>
+                    }
+                    if (User.IsInRole(RoleNameConstants.SuperUser))
+                    {
+                        <a class="btn btn-primary" asp-area="SuperUser" asp-page="/ListUser">Список пользователей</a>
+                    }
+                }
                 <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
                 <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Вход</a>
                 <a class="btn btn-primary" asp-area="User" asp-page="/Cart">Корзина</a>

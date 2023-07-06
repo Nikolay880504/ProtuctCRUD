@@ -43,7 +43,7 @@ namespace FIrstProductCRUD.User.Pages
             var order = _serviceOrderStorage.AddOrder(HttpContext.GetUserIdOrDefault());
             _serviceStorage.ChangeQuantityProducts(order);
             _serviceCartProduct.RemoveCart(HttpContext.GetUserIdOrDefault());
-            return RedirectToPage("./OrderCreatedPage", new { id = order.OrderId.ToString() });
+            return RedirectToPage("./OrderCreatedPage", new { id = order.OrderId.ToString()});
         }
 
 

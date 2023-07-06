@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace FIrstProductCRUD.User.Pages
 {
-    public class StartUserModel : PageModel
+    public class ProducListModel : PageModel
     {
         private readonly IServiceCartStorage _serviceCartStorage;
         private readonly IServiceStorage _serviceStorage;
@@ -19,7 +19,7 @@ namespace FIrstProductCRUD.User.Pages
        
         public List<Product> AllProducts { get; set; }
 
-        public StartUserModel(IServiceStorage serviceStorage, IServiceCartStorage serviceCartStorage)
+        public ProducListModel(IServiceStorage serviceStorage, IServiceCartStorage serviceCartStorage)
         {
             _serviceStorage = serviceStorage;
             _serviceCartStorage = serviceCartStorage;

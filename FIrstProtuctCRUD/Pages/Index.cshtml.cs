@@ -15,7 +15,7 @@ namespace FIrstProtuctCRUD.Pages
         public IActionResult OnGet()
         {
 
-            return RedirectToPage("/StartUser", new { area = "User" });
+            return RedirectToPage("/ProducList", new { area = "User" });
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using FIrstProductCRUD.Models;
+﻿using FIrstProductCRUD.Constants;
+using FIrstProductCRUD.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -16,13 +17,13 @@ namespace FIrstProductCRUD.Data.RolesIdentity
 
             if (user == null)
             {
-                var role1 = new IdentityRole<int> { Name = "admin" };
-                var role2 = new IdentityRole<int> { Name = "user" };
-                var role3 = new IdentityRole<int> { Name = "superUser" };
+                var roleAdmin = new IdentityRole<int> { Name =  RoleNameConstants.Admin};
+                var roleUser = new IdentityRole<int> { Name = RoleNameConstants.User };
+                var roleSuperUser = new IdentityRole<int> { Name = RoleNameConstants.SuperUser };
 
-                await roleManager.CreateAsync(role1);
-                await roleManager.CreateAsync(role2);
-                await roleManager.CreateAsync(role3);
+                await roleManager.CreateAsync(roleUser);
+                await roleManager.CreateAsync(roleAdmin);
+                await roleManager.CreateAsync(roleSuperUser);
 
                 var userName = "SuperUser@gmail.com";
                 var password = "12345__ABc";
@@ -32,17 +33,15 @@ namespace FIrstProductCRUD.Data.RolesIdentity
                 superUser.Email = userName;
 
                 var result = await userManager.CreateAsync(superUser, password);
-                Console.WriteLine(result.Succeeded + "ccccccccccccccccccccccccccccccccccccccccccccccccccc");
+              
                 if (result.Succeeded)
                 {                
-                    await userManager.AddToRoleAsync(superUser, role1.Name);
-                    await userManager.AddToRoleAsync(superUser, role2.Name);
-                    await userManager.AddToRoleAsync(superUser, role3.Name);
+                    await userManager.AddToRoleAsync(superUser, roleUser.Name);
+                    await userManager.AddToRoleAsync(superUser, roleAdmin.Name);
+                    await userManager.AddToRoleAsync(superUser, roleSuperUser.Name);
                 }
                 else
                 {
-                    // Создание пользователя не удалось
-                    // Обработайте ошибки, полученные в результате создания пользователя
                     foreach (var error in result.Errors)
                     {
                         Console.WriteLine("Ошибка создания пользователя: " + error.Description);

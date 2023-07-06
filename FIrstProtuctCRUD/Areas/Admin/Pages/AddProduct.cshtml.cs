@@ -6,9 +6,13 @@ using Microsoft.Graph;
 using System;
 using FIrstProtuctCRUD.Models;
 using System.Security.Cryptography;
+using FIrstProductCRUD.Constants;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace FIrstProductCRUD.Admin.Pages
 {
+    [Authorize(Roles = RoleNameConstants.Admin)]
     public class AddProductModel : PageModel
     {
         private readonly IServiceStorage _ServiceStorage;
@@ -63,7 +67,7 @@ namespace FIrstProductCRUD.Admin.Pages
                 _ServiceStorage.AddProduct(product);
             }
 
-            return RedirectToPage("/AdminPages/StartAdmin");
+            return RedirectToPage("./ProductEditing");
         }
     }
 }

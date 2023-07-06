@@ -1,0 +1,27 @@
+﻿@page
+@using Microsoft.AspNetCore.Identity
+@model FIrstProductCRUD.Areas.SuperUser.Pages.EditRolesModel
+@{
+}
+<html>
+<head>
+    <title>Права пользователя</title>
+</head>
+<body>
+  
+        <h2>Изменение ролей для пользователя @Model.ChangeRoleViewModel.UserName</h2>
+    <form method="post" asp-page-handler="Edit">
+            <input type="hidden" name="userId" value="@Model.ChangeRoleViewModel.Id" />
+            <div class="form group">
+                @foreach (IdentityRole<int> role in Model.ChangeRoleViewModel.AllRoles)
+                {
+                    <input type="checkbox" name="roles" value="@role.Name"
+                   @(Model.ChangeRoleViewModel.UserRoles.Contains(role.Name) ? "checked=\"checked\"" : "")>
+
+                    @role.Name <br />
+                }
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </form>   
+</body>
+</html>

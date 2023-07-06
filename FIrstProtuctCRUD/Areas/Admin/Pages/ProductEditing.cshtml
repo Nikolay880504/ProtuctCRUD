@@ -1,6 +1,5 @@
 ﻿@page
-@using FIrstProductCRUD.Admin.Pages;
-@model StartAdmin
+@model ProductEditingModel
 @{
 }
 <html>
@@ -15,7 +14,7 @@
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
                         <a class="btn btn-primary" asp-area="" asp-page="/AdminPages/StartAdmin">Домашняя страница</a>
-                        <a class="btn btn-primary" asp-area="" asp-page="/AdminPages/AddProduct">Добавить товар</a>
+                        <a class="btn btn-primary" asp-page="./AddProduct">Добавить товар</a>
                     </li>
                 </ul>
                 </>

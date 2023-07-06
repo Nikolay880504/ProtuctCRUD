@@ -5,7 +5,7 @@ namespace FIrstProductCRUD.Data
 {
     public class CartStorage : IServiceCartStorage
     {
-        ApplicationContext _context;
+        private readonly ApplicationContext _context;
 
         public CartStorage(ApplicationContext context)
         {

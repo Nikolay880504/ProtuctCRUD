@@ -1,0 +1,34 @@
+﻿@page
+@model FIrstProductCRUD.Areas.SuperUser.Pages.ListUserModel
+@{
+}
+<html>
+<head>
+    <title>Все пользователи</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+    <table class="table table-striped">
+        @if (Model.AllUsers != null)
+        {
+            <h2>Список пользователей</h2>
+            @foreach (var user in Model.AllUsers)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>
+                        <a class="btn btn-sm btn-primary" asp-page="EditRoles" asp-area="SuperUser" asp-route-id="@user.Id">Права доступа</a>
+                        <a class="btn btn-sm btn-danger" asp-page="DeleteUser" asp-area="SuperUser" asp-route-id="@user.Id">Удалить пользователя</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <h2>Список пользователей недоступен</h2>
+        }
+
+    </table>
+</body>
+</html>

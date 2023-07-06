@@ -1,20 +1,22 @@
+using FIrstProductCRUD.Constants;
 using FIrstProductCRUD.Data;
 using FIrstProtuctCRUD.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FIrstProductCRUD.Admin.Pages
 {
-    public class StartAdmin : PageModel
+    [Authorize(Roles = RoleNameConstants.Admin)]
+    public class ProductEditingModel : PageModel
     {
         private readonly IServiceStorage _ServiceStorage;
         public List<Product> AllProducts { get; set; }
 
-        public StartAdmin(IServiceStorage serviceStorage)
+        public ProductEditingModel(IServiceStorage serviceStorage)
         {
             _ServiceStorage = serviceStorage;
         }
-
         public IActionResult OnGet()
         {
             AllProducts = _ServiceStorage.GetProducts();

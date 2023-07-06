@@ -6,7 +6,7 @@ namespace FIrstProductCRUD.Data
 {
     public class DataBaseStorage : IServiceStorage
     {
-        ApplicationContext _context;
+        private readonly ApplicationContext _context;
         public DataBaseStorage(ApplicationContext context) { _context = context; }
         public void AddProduct(Product product)
         {

@@ -50,10 +50,7 @@ namespace FIrstProductCRUD.Areas.Identity.Pages.Account
                 if(user != null)
                 {
                     return RedirectToPage("./ResetPassword");
-                }
-              
-              //  return RedirectToPage("./ForgotPasswordConfirmation");
-          
+                }       
 
             return Page();
         }
