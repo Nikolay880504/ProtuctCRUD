@@ -25,7 +25,7 @@ namespace FIrstProductCRUD.Admin.Pages
         public async Task<IActionResult> OnPostRemove(int productId)
         {
             _ServiceStorage.RemoveProduct(productId);
-            return RedirectToPage("/AdminPages/StartAdmin");
+            return RedirectToPage();
         }
     }
 }

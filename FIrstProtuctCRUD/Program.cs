@@ -8,12 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using FIrstProductCRUD.Data.RolesIdentity;
 using Microsoft.Extensions.DependencyInjection;
 
+
 namespace FIrstProductCRUD
 {
     public class Program
     {
         public static void Main(string[] args)
         {
+            
 
             var builder = WebApplication.CreateBuilder(args);
 

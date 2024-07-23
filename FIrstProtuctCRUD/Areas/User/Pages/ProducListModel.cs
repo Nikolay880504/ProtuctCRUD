@@ -16,7 +16,7 @@ namespace FIrstProductCRUD.User.Pages
         private readonly IServiceStorage _serviceStorage;
         [BindProperty]
         public CartProduct CartProduct { get; set; }
-       
+
         public List<Product> AllProducts { get; set; }
 
         public ProducListModel(IServiceStorage serviceStorage, IServiceCartStorage serviceCartStorage)
@@ -24,33 +24,42 @@ namespace FIrstProductCRUD.User.Pages
             _serviceStorage = serviceStorage;
             _serviceCartStorage = serviceCartStorage;
         }
-    
+
         public IActionResult OnGet()
         {
             AllProducts = _serviceStorage.GetProducts();
             return Page();
         }
-       
+
         public async Task<IActionResult> OnPostAddCart()
-        {          
+        {
+
             if (!User.Identity.IsAuthenticated)
             {
                 ModelState.AddModelError(string.Empty, "Чтобы добавить продукт требуется аутентификация.");
-
-            }               
-            var product =  _serviceStorage.GetByIdOrNull(CartProduct.ProductId);
-            if (product.Quantity < CartProduct.QuantityProducts)
-            {
-                ModelState.AddModelError("CartProduct.QuantityProducts", "Такого количества товара нет в наличии");
             }
+
+            var product = _serviceStorage.GetByIdOrNull(CartProduct.ProductId);
+            if (product == null)
+            {
+                ModelState.AddModelError(string.Empty, "Продукт не найден.");
+            }
+            else if (product.Quantity < CartProduct.QuantityProducts)
+            {
+                ModelState.AddModelError("CartProduct.QuantityProducts", "Такого количества товара нет в наличии.");
+            }
+
             if (!ModelState.IsValid)
             {
                 AllProducts = _serviceStorage.GetProducts();
                 return Page();
             }
+
             CartProduct.UserId = HttpContext.GetUserIdOrDefault();
             _serviceCartStorage.AddCartProduct(CartProduct);
-            return RedirectToPage("./StartUser");
+
+            return RedirectToPage();
+
         }
     }
 }
