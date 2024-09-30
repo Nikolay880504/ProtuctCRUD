@@ -2,15 +2,12 @@ using FIrstProductCRUD.Data;
 using FIrstProductCRUD.Extensions;
 using FIrstProductCRUD.Models;
 using FIrstProtuctCRUD.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Newtonsoft.Json.Linq;
 
 namespace FIrstProductCRUD.User.Pages
 {
-    public class ProducListModel : PageModel
+    public class ProductListModel : PageModel
     {
         private readonly IServiceCartStorage _serviceCartStorage;
         private readonly IServiceStorage _serviceStorage;
@@ -19,7 +16,7 @@ namespace FIrstProductCRUD.User.Pages
 
         public List<Product> AllProducts { get; set; }
 
-        public ProducListModel(IServiceStorage serviceStorage, IServiceCartStorage serviceCartStorage)
+        public ProductListModel(IServiceStorage serviceStorage, IServiceCartStorage serviceCartStorage)
         {
             _serviceStorage = serviceStorage;
             _serviceCartStorage = serviceCartStorage;

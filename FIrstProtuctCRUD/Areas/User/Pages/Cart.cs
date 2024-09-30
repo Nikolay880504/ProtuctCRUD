@@ -2,16 +2,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using FIrstProductCRUD.Models;
 using FIrstProductCRUD.Data;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
-using Microsoft.Graph;
 using FIrstProductCRUD.Extensions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
+
+
 
 namespace FIrstProductCRUD.User.Pages
 {
-    [Authorize]
     public class CartModel : PageModel
     {
         private readonly IServiceCartStorage _serviceCartProduct;

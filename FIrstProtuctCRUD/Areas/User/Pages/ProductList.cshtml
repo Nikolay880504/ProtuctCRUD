@@ -1,0 +1,80 @@
+﻿@page
+@model ProductListModel
+@using Microsoft.AspNetCore.Authorization
+@using FIrstProductCRUD.Constants
+
+<html>
+<head>
+    <title>Доступные товары</title>
+</head>
+<body>
+    <h1 class="text-center">Доступные товары</h1>
+    <div class="container" style='text-align:end; width:100%'>
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                @{
+                    if (User.IsInRole(RoleNameConstants.Admin))
+                    {
+                        <a class="btn btn-primary" asp-area="Admin" asp-page="/ProductEditing">Учет товаров</a>
+                        <a class="btn btn-primary" asp-area="SuperUser" asp-page="/ListUser">Список пользователей</a>
+                        <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Logout">Выход</a>
+                        <a class="btn btn-primary" asp-area="User" asp-page="/Cart">Корзина</a>
+                    }
+                    else if (User.IsInRole(RoleNameConstants.SuperUser))
+                    {
+                        <a class="btn btn-primary" asp-area="SuperUser" asp-page="/ListUser">Список пользователей</a>
+                        <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Logout">Выход</a>
+                        <a class="btn btn-primary" asp-area="User" asp-page="/Cart">Корзина</a>
+                    }
+                    else
+                    {
+                        
+                        if (User.IsInRole(RoleNameConstants.User))
+                        {
+                            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Logout">Выход</a>
+                            <a class="btn btn-primary" asp-area="User" asp-page="/Cart">Корзина</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+                            <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Вход</a>
+                        }                   
+                       
+                    }
+                }
+
+            </li>
+            </ul>
+            </>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Цена</th>
+                    <th>Наличие шт.</th>
+                    <th>Количество шт.</th>
+                    <th>Код товара</th>
+                    <th></th>
+                </tr>
+            </thead>
+            @{
+            foreach (var product in Model.AllProducts)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>@product.Quantity</td>
+                    <form method="post" asp-page-handler="AddCart">
+                    <td><input type="number" value="0" name="QuantityProducts" /></td>
+                    <input type="hidden" name="ProductId" value="@product.Id" />
+                    <td>@product.Code</td>
+                    <td><button class="btn btn-success">Добавить в корзину</button></td>
+                    </form>
+                </tr>
+            }
+            <div class="validation" asp-validation-summary="All"></div>
+        }
+    </table>
+</body>
+</html>

@@ -1,5 +1,4 @@
-using FIrstProductCRUD.Data;
-using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FIrstProductCRUD.User.Pages

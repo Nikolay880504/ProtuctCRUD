@@ -1,0 +1,23 @@
+﻿@page "signout"
+@model LogoutModel
+@{
+    ViewBag.Title = "Выход";
+}
+
+<h2>Выход</h2>
+<p>Вы уверены, что хотите выйти?</p>
+
+<div class="form-group">
+    <form method="post" class="d-inline-block">
+        <button type="submit" class="btn btn-danger me-2" asp-page-handler="Logout">Да, выйти</button>
+    </form>
+
+    <a class="btn btn-secondary d-inline-block" asp-area="User" asp-page="/ProductList">Отменить</a>
+</div>
+
+
+
+
+
+
+

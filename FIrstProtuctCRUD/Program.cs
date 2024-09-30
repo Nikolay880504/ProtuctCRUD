@@ -1,12 +1,10 @@
 using FIrstProductCRUD.Data;
 using FIrstProductCRUD.Models;
-using FIrstProductCRUD.Admin.Pages;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using FIrstProductCRUD.Data.RolesIdentity;
-using Microsoft.Extensions.DependencyInjection;
+
 
 
 namespace FIrstProductCRUD
@@ -57,11 +55,11 @@ namespace FIrstProductCRUD
                 new AppDbInitializer().CreateSuperUser(userManager, roleManager).GetAwaiter().GetResult();
             }
 
-            // Configure the HTTP request pipeline.
+            
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+               
                 app.UseHsts();
             }
 
