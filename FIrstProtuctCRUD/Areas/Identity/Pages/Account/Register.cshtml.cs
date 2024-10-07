@@ -1,5 +1,4 @@
 ﻿
-
 using System.ComponentModel.DataAnnotations;
 using FIrstProductCRUD.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -61,28 +60,26 @@ namespace FIrstProductCRUD.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();// предоставляет пользователю возможность выбора провайдера аутентификации из списка доступных.
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
 
-            // ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();// предоставляет пользователю возможность выбора провайдера аутентификации из списка доступных.
-            if (ModelState.IsValid)//Проверяет нет ошибок ввода
+            if (ModelState.IsValid)
             {
-                var user = CreateUser();//создаеться обьект IdentityUser
+                var user = CreateUser();
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);//используется для установки имени пользователя в БД.
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);//используется для установки почты пользователя  в БД.
-                var result = await _userManager.CreateAsync(user, Input.Password);//создание нового пользователя в БД
+                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                var result = await _userManager.CreateAsync(user, Input.Password);
                 
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "user");
                     _logger.LogInformation("User created a new account with password.");
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);//аутентификация пользователя и установки куки аутентификации.
+                    await _signInManager.SignInAsync(user, isPersistent: false);
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)
@@ -101,9 +98,11 @@ namespace FIrstProductCRUD.Areas.Identity.Pages.Account
             }
             catch
             {
-                throw new InvalidOperationException($"Can't create an instance of '{nameof(IdentityUser)}'. " +
-                    $"Ensure that '{nameof(IdentityUser)}' is not an abstract class and has a parameterless constructor, or alternatively " +
-                    $"override the register page in /Areas/Identity/Pages/Account/Register.cshtml");
+                throw new InvalidOperationException($@"
+                         Невозможно создать экземпляр '{nameof(IdentityUser)}'. 
+                         Убедитесь, что '{nameof(IdentityUser)}' не является абстрактным классом и имеет 
+                         конструктор без параметров, или, как альтернатива, 
+                         переопределите страницу регистрации в /Areas/Identity/Pages/Account/Register.cshtml");
             }
         }
 
@@ -111,7 +110,8 @@ namespace FIrstProductCRUD.Areas.Identity.Pages.Account
         {
             if (!_userManager.SupportsUserEmail)
             {
-                throw new NotSupportedException("The default UI requires a user store with email support.");
+                throw new NotSupportedException($@"Стандартный интерфейс пользователя требует хранилище пользователей
+                                                с поддержкой электронной почты.");
             }
             return (IUserEmailStore<WebSiteUser>)_userStore;
         }
